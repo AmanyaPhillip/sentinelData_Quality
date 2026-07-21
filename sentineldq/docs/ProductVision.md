@@ -21,3 +21,6 @@ SentinelDQ solves these challenges by providing:
 - Data Quality Engineers & SDETs
 - Enterprise Data Platform Teams
 - Financial Analytics Engineers
+
+## Integrations & Operationalization
+SentinelDQ is built to seamlessly integrate into modern incident management workflows. It features out-of-the-box support for generating webhooks to **Slack / Microsoft Teams** and automatically creating structured **Jira / Linear** tickets populated with AI-generated root-cause analyses.

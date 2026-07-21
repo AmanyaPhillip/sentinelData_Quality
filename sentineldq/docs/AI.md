@@ -25,3 +25,8 @@ Analyze the telemetry and output a structured response in JSON with:
 2. Likely Failure Origin (ETL Layer, DB Corruption, API Regression, or UI Mismatch)
 3. Recommended Fix Strategy (Actionable steps for engineering)
 """
+
+## Data Privacy & Security (Zero Trust AI)
+Handling financial data requires strict privacy controls when integrating with LLMs. SentinelDQ enforces a strict privacy boundary:
+- **Automated Data Masking:** An automated anonymization layer intercepts all telemetry before it is packaged for the LLM.
+- **Metadata-Only Telemetry:** The engine only sends schema definitions, structural metadata, and execution error traces. Actual row-level data values (PII/PCI) are strictly omitted and never leave the secure network.
