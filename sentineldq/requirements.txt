@@ -1,11 +1,27 @@
+# Web & API Framework
 fastapi>=0.100.0
 uvicorn[standard]>=0.22.0
+pydantic>=2.0.0
+
+# Database & Storage
 sqlalchemy>=2.0.0
 psycopg2-binary>=2.9.6
-pydantic>=2.0.0
-pydantic-settings>=2.0.0
-pytest>=7.4.0
+
+# Data Processing
+pandas>=2.0.0
+polars>=0.18.0
+
+# Testing & Automation
+pytest>=7.3.0
+pytest-cov>=4.1.0
 playwright>=1.35.0
+
+# Configurations & AI
 pyyaml>=6.0
 langgraph>=0.0.10
-langsmith>=0.0.10
+langsmith>=0.1.0
+openai>=1.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+structlog>=23.1.0
