@@ -1,0 +1,19 @@
+version: "1.0"
+target_dataset: "banking_accounts"
+
+rules:
+  - id: "rule_account_balance_positive"
+    name: "Ensure account balances are non-negative"
+    type: "numeric_comparison"
+    field: "balance"
+    operator: ">="
+    value: 0
+    severity: "CRITICAL"
+
+  - id: "rule_valid_currency"
+    name: "Ensure account currency is standard"
+    type: "enum_membership"
+    field: "currency"
+    params:
+      allowed_values: ["CAD", "USD", "EUR"]
+    severity: "HIGH"

@@ -1,28 +1,31 @@
 import yaml
 from pathlib import Path
-from typing import List, Optional, Any, Union
+from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
 
 class RuleConfig(BaseModel):
     id: str
-    field: str
+    name: Optional[str] = None
     type: str
+    field: Optional[str] = None
     operator: Optional[str] = None
-    threshold: Optional[Union[int, float]] = None
-    allowed_values: Optional[List[Any]] = None
-    severity: str = Field(default="HIGH", description="Severity level: CRITICAL, HIGH, MEDIUM, LOW")
+    value: Optional[Any] = None
+    severity: str = "HIGH"
+    plugin_class: Optional[str] = None
+    params: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
-class ValidationConfig(BaseModel):
-    version: str = "1.0"
+class DatasetValidationConfig(BaseModel):
+    version: str
     target_dataset: str
     rules: List[RuleConfig]
 
-def parse_yaml_config(file_path: Union[str, Path]) -> ValidationConfig:
+def load_yaml_config(file_path: str) -> DatasetValidationConfig:
+    """Parses and validates a YAML rule configuration file."""
     path = Path(file_path)
     if not path.exists():
-        raise FileNotFoundError(f"Configuration file not found at: {file_path}")
+        raise FileNotFoundError(f"Config file not found at: {file_path}")
     
-    with open(path, "r", encoding="utf-8") as f:
-        raw_data = yaml.safe_load(f)
+    with open(path, "r") as file:
+        raw_data = yaml.safe_load(file)
         
-    return ValidationConfig(**raw_data)
+    return DatasetValidationConfig(**raw_data)
