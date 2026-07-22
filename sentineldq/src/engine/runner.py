@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from src.utils.config_parser import load_yaml_config
 from src.engine.factory import ValidatorFactory
 from src.engine.strategies.base import ValidationResult
+from src.ai.rca_agent import RCAAgent
 
 class ValidationRunner:
     """Orchestrates loading YAML configs and executing validation strategies."""
@@ -19,6 +20,12 @@ class ValidationRunner:
             rule_dict = rule.model_dump()
             strategy = ValidatorFactory.get_strategy(rule_dict)
             result = strategy.validate(df, rule_dict)
+            
+            if not result.passed:
+                agent = RCAAgent()
+                rca_report = agent.analyze_failure(result.model_dump())
+                result.failure_context["ai_diagnostic"] = rca_report.model_dump()
+                
             results.append(result)
             
             status_icon = "✅ PASSED" if result.passed else "❌ FAILED"
@@ -42,6 +49,11 @@ class ValidationRunner:
                 query = f"SELECT * FROM {self.config.target_dataset}"
                 df = pd.read_sql(query, con=db_session.bind)
                 result = strategy.validate(df, rule_dict)
+                
+            if not result.passed:
+                agent = RCAAgent()
+                rca_report = agent.analyze_failure(result.model_dump())
+                result.failure_context["ai_diagnostic"] = rca_report.model_dump()
                 
             results.append(result)
             
