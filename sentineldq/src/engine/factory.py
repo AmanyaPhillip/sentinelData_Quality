@@ -6,6 +6,7 @@ from src.engine.strategies.builtins import (
     UniquenessStrategy,
     EnumMembershipStrategy,
 )
+from src.engine.strategies.sql_strategy import SQLQueryStrategy
 
 class ValidatorFactory:
     """
@@ -17,6 +18,7 @@ class ValidatorFactory:
         "numeric_comparison": NumericComparisonStrategy,
         "uniqueness": UniquenessStrategy,
         "enum_membership": EnumMembershipStrategy,
+        "sql_query": SQLQueryStrategy,
     }
 
     @classmethod
